@@ -1,4 +1,4 @@
 class Image < ApplicationRecord
   belongs_to :feed
-  validates :geometry, format: { with: /\0[0-9]+\9x\0[0-9]+\9/ }
+  validates :geometry, format: { with: /[1-9][0-9]*x[1-9][0-9]/ }
 end

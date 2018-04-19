@@ -1,7 +1,11 @@
 FactoryBot.define do
-  factory :image do
-    file_name "MyString"
-    geometry "MyString"
-    feed_id 1
+  factory :image, class: 'Image' do
+    feed
+    sequence(:file_name) {Faker::File.file_name('').split('/')[1]}
+    geometry "420x680"
+
+    factory :bad_image do
+      geometry "Golden Ratio"
+    end
   end
 end

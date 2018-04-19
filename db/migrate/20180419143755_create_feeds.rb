@@ -3,7 +3,7 @@ class CreateFeeds < ActiveRecord::Migration[5.1]
     create_table :feeds do |t|
       t.string :name
       t.integer :count
-      t.refernces :image
+      t.references :image
 
       t.timestamps
     end
