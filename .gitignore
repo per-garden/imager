@@ -14,10 +14,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
-/google_credentials/*
+/config/google/*
 !/log/.keep
 !/tmp/.keep
-!/google_credentials/.keep
+!/config/google/.keep
 
 /node_modules
 /yarn-error.log
