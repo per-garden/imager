@@ -5,8 +5,8 @@ describe GoogleDriveFetchJob, :type => :helper do
     # A (test) google account is needed!
     session = GoogleDrive::Session.from_config("config/google/test_credentials.json")
     # Expect test account's drive to have (empty) folder named pics
-    @directory = session.collection_by_title('pics')
-    @file = @directory.upload_from_file('spec/test_image.jpg')
+    @directory = session.collection_by_title('test')
+    @file = @directory.upload_from_file('spec/medium.jpg')
   end
 
   before(:each) do
