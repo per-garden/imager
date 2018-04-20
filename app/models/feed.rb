@@ -6,4 +6,5 @@ class Feed < ApplicationRecord
   validates :name, format: { with: /\A[a-zA-Z0-9]+\Z/ }
   # A feed must allow at least one image
   validates :count, :numericality => { greater_than_or_equal_to: 1 }
+  validates :geometry, format: { with: /[1-9][0-9]*x[1-9][0-9]/ }
 end

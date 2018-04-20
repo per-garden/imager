@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419143755) do
+ActiveRecord::Schema.define(version: 20180420134257) do
 
   create_table "feeds", force: :cascade do |t|
     t.string "name"
@@ -18,12 +18,12 @@ ActiveRecord::Schema.define(version: 20180419143755) do
     t.integer "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "geometry"
     t.index ["image_id"], name: "index_feeds_on_image_id"
   end
 
   create_table "images", force: :cascade do |t|
-    t.string "file_name"
-    t.string "geometry"
+    t.string "name"
     t.integer "feed_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
