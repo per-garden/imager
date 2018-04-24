@@ -1,3 +1,6 @@
+# Make sure Feed get correctly loaded as toplevel constant
+require Rails.root.join('app/models/feed.rb')
+
 class GoogleDriveFetchJob
   include Celluloid
 
@@ -26,8 +29,7 @@ class GoogleDriveFetchJob
         if directory && directory.files 
           directory.files.each do |google_file|
             name = google_file.title
-            # So why the heck does Google multiply our files?
-            unless Image.find_by_name(name) || Dir[download_directory].empty?
+            if (feed.images.to_a.select {|im| im.name == name}).empty?
               google_file.download_to_file("#{download_directory}/#{name}")
               image = Image.new(name: google_file.title)
               image.feed = feed
