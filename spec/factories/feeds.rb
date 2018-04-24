@@ -14,6 +14,7 @@ FactoryBot.define do
 
     factory :test_feed do
       name 'test'
+      count 2
     end
   end
 end

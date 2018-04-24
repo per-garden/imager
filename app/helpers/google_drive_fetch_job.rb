@@ -30,6 +30,12 @@ class GoogleDriveFetchJob
           directory.files.each do |google_file|
             name = google_file.title
             if (feed.images.to_a.select {|im| im.name == name}).empty?
+              unless feed.images.count < feed.count
+                image = feed.images.order(created_at: :asc).first
+                path = download_directory + '/' + image.name
+                File.exists?(path) ? File.delete(path) : nil
+                image.destroy
+              end
               google_file.download_to_file("#{download_directory}/#{name}")
               image = Image.new(name: google_file.title)
               image.feed = feed
