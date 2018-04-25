@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :feed do
     sequence(:name) {Faker::Lorem.word}
     count Random.rand(2...6)
-    geometry "420x680"
+    geometry "6#{Random.rand(10).to_s}0x4#{Random.rand(10).to_s}0"
 
     factory :bad_feed1 do
       name 'Bad Name  !%'

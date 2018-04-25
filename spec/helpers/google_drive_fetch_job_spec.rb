@@ -26,6 +26,14 @@ describe GoogleDriveFetchJob, :type => :helper do
       expect(Dir.entries(@download_directory)).to include @image
     end
 
+    it 'resizes image' do
+      sleep(Rails.application.config.google_drive[:poll_interval].to_i * 2)
+      actual = FastImage.size("#{@download_directory}/#{@image}")
+      expected = @feed.geometry.split('x')
+      # Resize will set one max while keeping aspect ratio
+      expect(actual[0].to_s == expected[0].to_s || actual[1].to_s == expected[1].to_s).to be true
+    end
+
     after(:all) do
       @directory.files.each do |f|
         # Delete is not delete unless "permanent"!!

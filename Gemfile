@@ -45,6 +45,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rails-controller-testing'
+  gem 'fastimage', '~> 2.1', '>= 2.1.1'
 end
 
 group :development do
