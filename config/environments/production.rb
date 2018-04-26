@@ -88,4 +88,11 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.google_drive = {
+    # Interval in seconds between checking for drive folder updates
+    poll_interval: 60,
+    download_directory: 'images'
+  }
+
 end

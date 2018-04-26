@@ -59,3 +59,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'celluloid'
 gem 'rmagick'
 gem 'google_drive'
+gem 'ruby-filemagic'

@@ -8,4 +8,8 @@ class Feed < ApplicationRecord
   validates :count, :numericality => { greater_than_or_equal_to: 1 }
   # Columns x rows
   validates :geometry, format: { with: /[1-9][0-9]*x[1-9][0-9]/ }
+
+  def init
+    upload_url = ''
+  end
 end

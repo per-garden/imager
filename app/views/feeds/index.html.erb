@@ -1,0 +1,46 @@
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tr>
+    <th valign="top">Id</th>
+    <th valign="top">Name</th>
+    <th valign="top">Upload Url</th>
+    <th valign="top">Count</th>
+    <th valign="top">Geometry</th>
+    <th valign="top">Download Url</th>
+  </tr>
+  <tbody>
+  <% Feed.all.each do |feed| %>
+    <tr>
+        <td valign="top">
+          <%= feed.id %>
+        </td>
+        <td valign="top">
+          <%= feed.name %>
+        </td>
+        <td valign="top">
+          <a href="<%= feed.upload_url %>"><%= feed.upload_url %></a>
+        </td>
+        <td valign="top">
+          <%= feed.count %>
+        </td>
+        <td valign="top">
+          <%= feed.geometry %>
+        </td>
+        <td valign="top">
+          <a href="<%= root_url + feed.name %>"><%= root_url + '/' + feed.name %></a>
+        </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<div>
+ <br>
+ Legend:<br>
+<br>
+# Name sensibly usable as part of URL<br>
+name<br>
+# Where to upload images for this feed<br>
+upload_url<br>
+# Max number of images in feed. New images with name not already present will discard oldest image first<br>
+count<br>
+# Max columns x rows<br>
+geometry<br>

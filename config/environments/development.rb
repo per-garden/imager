@@ -51,4 +51,10 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.google_drive = {
+    # Interval in seconds between checking for drive folder updates
+    poll_interval: 60,
+    download_directory: 'images'
+  }
 end
