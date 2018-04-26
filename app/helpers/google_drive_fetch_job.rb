@@ -37,14 +37,18 @@ class GoogleDriveFetchJob
                 image.destroy
               end
               google_file.download_to_file('tmp/download')
-              image = Magick::Image::read('tmp/download')[0]
-              image.change_geometry!(feed.geometry) { |cols, rows, img|
-                newimg = img.resize(cols, rows)
-                newimg.write("#{download_directory}/#{name}")
-              }
-              image = Image.new(name: google_file.title)
-              image.feed = feed
-              image.save!
+              begin
+                image = Magick::Image::read('tmp/download')[0]
+                image.change_geometry!(feed.geometry) { |cols, rows, img|
+                  newimg = img.resize(cols, rows)
+                  newimg.write("#{download_directory}/#{name}")
+                }
+                image = Image.new(name: google_file.title)
+                image.feed = feed
+                image.save!
+              rescue Magick::ImageMagickError
+                Rails.logger.info "Unable to scale file #{name}"
+              end
             end
           end
         end
