@@ -54,7 +54,7 @@ Create a credentials file as config/google/credentials.json. Initially let it co
 ```
 {
   "client_id": "XXXX",
-  "client_secret": "YYYY",
+  "client_secret": "YYYY"
 }
 ```
 
@@ -83,7 +83,21 @@ Be positioned in the imager directory.
  - run `rake secret` and create a config/secrets.yml file
  - RAILS_ENV=production rake assets:precompile
 
-On first start Google will prompt for a session token. It may be cenvenient to do an initial  rails console run. The Google credentials file will be adapted to:
+On first start Google will prompt for a session token. Start irb (not rails console) and do:
+
+```
+ruby@infotv:~/projects/imager$ irb
+irb(main):001:0> require "google_drive"
+=> true
+irb(main):002:0> session = GoogleDrive::Session.from_config("config/google/credentials.json")
+
+1. Open this page:
+https://accounts.google.com/o/oauth2/auth?access...
+
+2. Enter the authorization code shown in the page: ZZZZ
+=> #<GoogleDrive::Session:0x2ac12aa251f0>
+irb(main):003:0>
+```
 
 ```
 { 
