@@ -58,11 +58,6 @@ Create a credentials file as config/google/credentials.json. Initially let it co
 }
 ```
 
-## Rss
-
-As default the rss feed will appear on port 3000, and on the default route, e.g. http://localhost:3000
-
-
 # Setup
 
 ## Gems
