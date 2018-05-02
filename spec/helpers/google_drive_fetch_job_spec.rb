@@ -19,13 +19,17 @@ describe GoogleDriveFetchJob, :type => :helper do
 
     before(:all) do
       @feed = create(:test_feed)
+      @small_image = 'small.jpg'
+      FileUtils.cp("spec/#{@small_image}", @download_directory)
+      image = Image.new(name: @small_image)
+      image.feed = @feed
+      image.save!
       @image = 'medium.jpg'
       @directory.upload_from_file("spec/#{@image}")
     end
 
     it 'fetches image' do
       sleep(Rails.application.config.google_drive[:poll_interval].to_i * 2)
-      expect(Image.count).to eq 1
       expect(Dir.entries(@download_directory)).to include @image
     end
 
@@ -35,6 +39,11 @@ describe GoogleDriveFetchJob, :type => :helper do
       expected = @feed.geometry.split('x')
       # Resize will set one max while keeping aspect ratio
       expect(actual[0].to_s == expected[0].to_s || actual[1].to_s == expected[1].to_s).to be true
+    end
+
+    it 'deletes image if no corresponding image on remote drive' do
+      sleep(Rails.application.config.google_drive[:poll_interval].to_i * 2)
+      expect(Dir.entries(@download_directory)).not_to include @small_image
     end
 
     after(:all) do
@@ -54,20 +63,14 @@ describe GoogleDriveFetchJob, :type => :helper do
     before(:all) do
       @feed = create(:test_feed)
       @image = 'small.jpg'
-      FileUtils.cp("spec/#{@image}", @download_directory)
-      image = Image.new(name: @image)
-      image.feed = @feed
-      image.save!
-      @image = 'large.jpg'
-      FileUtils.cp("spec/#{@image}", @download_directory)
-      image = Image.new(name: @image)
-      image.feed = @feed
-      image.save!
+      @directory.upload_from_file("spec/#{@image}")
       @image = 'medium.jpg'
+      @directory.upload_from_file("spec/#{@image}")
+      @image = 'large.jpg'
       @directory.upload_from_file("spec/#{@image}")
     end
 
-    it 'fetches image' do
+    it 'fetches image while keeping local max count' do
       sleep(Rails.application.config.google_drive[:poll_interval].to_i * 2)
       expect(Image.count).to eq 2
       expect(Dir.entries(@download_directory)).to include @image

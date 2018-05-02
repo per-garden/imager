@@ -26,7 +26,24 @@ class GoogleDriveFetchJob
       Feed.all.each do |feed|
         download_directory = "#{Rails.application.config.google_drive[:download_directory]}/#{feed.name}"
         directory = session.collection_by_title("#{feed.name}")
-        if directory && directory.files 
+        if directory 
+          # First delete all local files not on remote
+          to_be_deleted = []
+          feed.images.each do |im|
+            to_be_deleted << im.name
+          end
+          directory.files.each do |df|
+            # Locals not on remote are to be deleted
+            to_be_deleted.delete(df.title)
+          end
+          to_be_deleted.each do |tbd|
+            image = feed.images.select {|im| im.name == tbd}[0]
+            if image
+              path = download_directory + '/' + tbd
+              File.exists?(path) ? File.delete(path) : nil
+              image.destroy
+            end
+          end
           directory.files.each do |google_file|
             name = google_file.title
             if (feed.images.to_a.select {|im| im.name == name}).empty?
