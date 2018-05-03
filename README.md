@@ -35,6 +35,8 @@ Download from GitHub repository:
 
 # Configuration
 
+For all setup and configuaration be positioned in directory as created by git clone.
+
 ## Google Drive
 
 Adapt files config/environments/development.rb and config/environments/production.rb to your needs. The section specifically regarding mail retrieval is shown below:
@@ -58,11 +60,13 @@ Create a credentials file as config/google/credentials.json. Initially let it co
 }
 ```
 
+(Use the real keys (not XXXX and YYYY) of course...)
+
 # Setup
 
-## Gems
+For all setup and configuaration be positioned in directory as created by git clone.
 
-Go to directory as created by git clone. Then type:
+## Gems
 
  - bundle install
 
@@ -73,7 +77,7 @@ Initiate the database(s):
 
  - bundle exec rake db:setup
 
-Downloaded images are stored into feeds, providing normalised images to clients. At least one feed is required. Create feed using the Rails console. E.g. `Feed.create(name: 'default', count: 20, geometry: '640x420')`
+Downloaded images are stored into feeds, providing normalised images to clients. At least one feed is required. Create feed using the Rails console. E.g. `Feed.create(name: 'default', count: 20, geometry: '640x420')`. For each feed note that a corresponding (named exactly as your feed) directory must exist, both on your Google Drive and in your local download directory.
 
 
 # Usage
@@ -83,7 +87,7 @@ Be positioned in the imager directory.
  - run `rake secret` and create a config/secrets.yml file
  - RAILS_ENV=production rake assets:precompile
 
-On first start Google will prompt for a session token. Start irb (not rails console) and do:
+On first start Google will prompt for a session token. Start irb (not rails console):
 
 ```
 ruby@infotv:~/projects/imager$ irb
@@ -99,6 +103,8 @@ https://accounts.google.com/o/oauth2/auth?access...
 irb(main):003:0>
 ```
 
+Your google credentials file will get extended to something like:
+
 ```
 { 
   "client_id": "XXXX",
@@ -109,11 +115,11 @@ irb(main):003:0>
   ],
   "refresh_token": "ZZZZ"
 }
-
+```
 
 Then start rails server:
 
-```html
+```
 per@lex14:~/projects/imager$ rails s
 I, [2018-04-27T12:16:52.398010 #19412]  INFO -- : Celluloid 0.17.3 is running in BACKPORTED mode. [ http://git.io/vJf3J ]
 => Booting Puma
@@ -139,11 +145,11 @@ Success - #<Google::Apis::DriveV3::FileList:0x0055c37064cf88
 
 ```
 
-Now access the application at e.g. http://my_host.my_domain:3000 (For local testing this will be http://localhost:3000). This will display an overview web page listing available feeds. To download images, use the explicit feed url. E.g. http://localhost:3000/default.
+Now access the application with a web browser (e.g. at http://localhost:3000). This will display an overview web page listing available feeds. To download images, use one of the explicit feed url.
 
 Stopping:
 
-```html
+```
 ^C- Gracefully stopping, waiting for requests to finish
 === puma shutdown: 2018-03-02 11:47:37 +0100 ===
 - Goodbye!
@@ -157,7 +163,7 @@ Shutting down reports errors although everything is OK...
 
 # Tests
 
-We use rspec for testing. To run all tests a Google Drive account must be accessible and contain a test directory:
+We use rspec for testing. To run all tests a Google Drive account must be accessible and contain a derctory named `test`:
 
 ```
 bundle exec rspec spec
@@ -171,7 +177,7 @@ bundle exec rspec spec
 
 # Releases
 
- - v0.1: Initial release
+ - v0.1: Initial release (upcoming)
 
 # Licence
 
